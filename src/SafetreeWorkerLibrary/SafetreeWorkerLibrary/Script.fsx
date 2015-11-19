@@ -22,6 +22,7 @@ let password =
 
 let user = User(name, password)
 let works = getUnfinishedWorks user
+printfn "%A" works
 works |> List.iter doWork
 
 //停止工作
