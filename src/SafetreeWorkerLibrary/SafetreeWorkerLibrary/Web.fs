@@ -5,14 +5,30 @@ open HtmlAgilityPack
 
 let userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0"
 
-let httpPostHtmlDocument (uri : string) parameters cookies =
+let webRequest (uri : string) method' cookies =
     let request = System.Net.WebRequest.CreateHttp uri
-    request.Method <- "POST"
+    request.Method <- method'
     request.Proxy <- null;
-    request.ServicePoint.Expect100Continue <- false
     request.UserAgent <- userAgent
     request.ContentType <- "application/x-www-form-urlencoded"
     request.CookieContainer <- cookies
+    request
+
+let httpGetResponseStream uri cookies =
+    let request = webRequest uri "GET" cookies
+    use response = request.GetResponse () :?> HttpWebResponse
+    response.GetResponseStream ()
+
+let httpGetHtmlDocument uri cookies = 
+    use responseStream = httpGetResponseStream uri cookies
+    
+    let doc = HtmlDocument()
+    doc.Load(responseStream)
+    doc
+
+let httpPostResponseStream uri parameters cookies =
+    let request = webRequest uri "POST" cookies
+    request.ServicePoint.Expect100Continue <- false
 
     let postBytes =
         parameters
@@ -26,13 +42,15 @@ let httpPostHtmlDocument (uri : string) parameters cookies =
     postStream.Write (postBytes, 0, postBytes.Length)
 
     use response = request.GetResponse () :?> HttpWebResponse
-    use responseStream = response.GetResponseStream ()
-    let htmlStream = responseStream
     cookies.Add response.Cookies
+    response.GetResponseStream ()
+
+let httpPostHtmlDocument uri parameters cookies =
+    use responseStream = httpPostResponseStream uri parameters cookies
 
     let doc = HtmlDocument()
-    doc.Load(htmlStream)
-    doc, cookies
+    doc.Load(responseStream)
+    doc
 
 
 let login (User(name, password)) cookie =
