@@ -55,5 +55,7 @@ let httpPostHtmlDocument uri parameters cookies =
 
 let login (User(name, password)) cookie =
     let uri = "http://chengdu.safetree.com.cn/"
+    let loginStr = "/LoginHandler.ashx?jsoncallback=jQuery16109697099955916239_1447911610475&userName=" + name + "&password=" + password + "&type=login&loginType=1"
+    let html = httpGetHtmlDocument uri cookie
     //let requst = System.Net.WebRequest.CreateHttp uri
     ()
