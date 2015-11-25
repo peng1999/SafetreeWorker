@@ -3,11 +3,20 @@
 open System.Net
 open HtmlAgilityPack
 
+type HttpRequest =
+    | HttpGet
+    | HttpPost of (string * string) seq
+
+    override this.ToString () =
+        match this with
+        | HttpGet -> "GET"
+        | HttpPost _ -> "POST"
+
 let userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0"
 
-let webRequest (uri : string) method' cookies =
+let webRequest (uri : string) requestMethod cookies =
     let request = System.Net.WebRequest.CreateHttp uri
-    request.Method <- method'
+    request.Method <- requestMethod.ToString ()
     request.Proxy <- null;
     request.UserAgent <- userAgent
     request.ContentType <- "application/x-www-form-urlencoded"
@@ -52,10 +61,9 @@ let httpPostHtmlDocument uri parameters cookies =
     doc.Load(responseStream)
     doc
 
-
 let login (User(name, password)) cookie =
     let uri = "http://chengdu.safetree.com.cn/"
-    let loginStr = "/LoginHandler.ashx?jsoncallback=jQuery16109697099955916239_1447911610475&userName=" + name + "&password=" + password + "&type=login&loginType=1"
+    let loginStr = "/LoginHandler.ashx?userName=" + name + "&password=" + password + "&type=login&loginType=1"
     let html = httpGetHtmlDocument uri cookie
     //let requst = System.Net.WebRequest.CreateHttp uri
     ()
