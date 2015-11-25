@@ -21,42 +21,75 @@ let webRequest (uri : string) requestMethod cookies =
     request.UserAgent <- userAgent
     request.ContentType <- "application/x-www-form-urlencoded"
     request.CookieContainer <- cookies
+
+    match requestMethod with
+    | HttpPost parameters ->
+        let postBytes =
+            parameters
+            |> Seq.map (fun (a, b : string) -> a + "=" + System.Web.HttpUtility.UrlEncode b)
+            |> String.concat "&"
+            |> System.Text.Encoding.UTF8.GetBytes
+
+        request.ContentLength <- int64 postBytes.Length
+    | _ -> ()
+
     request
 
-let httpGetResponseStream uri cookies =
-    let request = webRequest uri "GET" cookies
+let responseStream (request : HttpWebRequest) =
     use response = request.GetResponse () :?> HttpWebResponse
-    response.GetResponseStream ()
+    let ret = response.GetResponseStream ()
+    request.CookieContainer.Add(response.Cookies)
+    ret
 
-let httpGetHtmlDocument uri cookies = 
-    use responseStream = httpGetResponseStream uri cookies
+//
+//let httpGetResponseStream uri cookies =
+//    let request = webRequest uri "GET" cookies
+//    use response = request.GetResponse () :?> HttpWebResponse
+//    response.GetResponseStream ()
+//
+//
+//let httpPostResponseStream uri parameters cookies =
+//    let request = webRequest uri "POST" cookies
+//    request.ServicePoint.Expect100Continue <- false
+//
+//    let postBytes =
+//        parameters
+//        |> Seq.map (fun (a, b : string) -> a + "=" + System.Web.HttpUtility.UrlEncode b)
+//        |> String.concat "&"
+//        |> System.Text.Encoding.UTF8.GetBytes
+//
+//    request.ContentLength <- int64 postBytes.Length
+//
+//    use postStream = request.GetRequestStream ()
+//    postStream.Write (postBytes, 0, postBytes.Length)
+//
+//    use response = request.GetResponse () :?> HttpWebResponse
+//    cookies.Add response.Cookies
+//    response.GetResponseStream ()
+//
+//
+//let httpGetHtmlDocument uri cookies = 
+//    use responseStream = httpGetResponseStream uri cookies
+//    
+//    let doc = HtmlDocument()
+//    doc.Load(responseStream)
+//    doc
+//
+//
+//let httpPostHtmlDocument uri parameters cookies =
+//    use responseStream = httpPostResponseStream uri parameters cookies
+//
+//    let doc = HtmlDocument()
+//    doc.Load(responseStream)
+//    doc
+//
+
+let httpHtmlDocument requestMethod uri cookies =
+    use responseStream =
+        webRequest uri requestMethod cookies
+        |> responseStream
+
     
-    let doc = HtmlDocument()
-    doc.Load(responseStream)
-    doc
-
-let httpPostResponseStream uri parameters cookies =
-    let request = webRequest uri "POST" cookies
-    request.ServicePoint.Expect100Continue <- false
-
-    let postBytes =
-        parameters
-        |> Seq.map (fun (a, b : string) -> a + "=" + System.Web.HttpUtility.UrlEncode b)
-        |> String.concat "&"
-        |> System.Text.Encoding.UTF8.GetBytes
-
-    request.ContentLength <- int64 postBytes.Length
-
-    use postStream = request.GetRequestStream ()
-    postStream.Write (postBytes, 0, postBytes.Length)
-
-    use response = request.GetResponse () :?> HttpWebResponse
-    cookies.Add response.Cookies
-    response.GetResponseStream ()
-
-let httpPostHtmlDocument uri parameters cookies =
-    use responseStream = httpPostResponseStream uri parameters cookies
-
     let doc = HtmlDocument()
     doc.Load(responseStream)
     doc
@@ -64,6 +97,5 @@ let httpPostHtmlDocument uri parameters cookies =
 let login (User(name, password)) cookie =
     let uri = "http://chengdu.safetree.com.cn/"
     let loginStr = "/LoginHandler.ashx?userName=" + name + "&password=" + password + "&type=login&loginType=1"
-    let html = httpGetHtmlDocument uri cookie
-    //let requst = System.Net.WebRequest.CreateHttp uri
+    let html = httpHtmlDocument HttpGet uri cookie
     ()
