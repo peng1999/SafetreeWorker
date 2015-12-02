@@ -107,4 +107,8 @@ let downloadIndexPage user =
     let indexPageUri = "http://chengdu.safetree.com.cn/SafeSchool/StuSafeCourse.aspx"
     login user
     let page = httpHtmlDocument HttpPost indexPageUri user.Cookie
-    let contentlist01 = (page.GetElementbyId "content").ChildNodes.FindFirst "ul"
+    let listNodes = page.DocumentNode.SelectNodes "//div//a[@target]"
+    let uris = 
+        listNodes 
+        |> Seq.map (fun a -> a.GetAttributeValue("href", null))
+        |> Seq.map (function null -> None | s -> s)
