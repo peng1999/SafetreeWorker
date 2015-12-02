@@ -1,4 +1,4 @@
-﻿namespace SafetreeWorkerLibrary.AssemblyInfo
+﻿namespace Test.AssemblyInfo
 
 open System.Reflection
 open System.Runtime.CompilerServices
@@ -7,12 +7,12 @@ open System.Runtime.InteropServices
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[<assembly: AssemblyTitle("SafetreeWorkerLibrary")>]
-[<assembly: AssemblyDescription("安全教育平台做题机")>]
+[<assembly: AssemblyTitle("Runner")>]
+[<assembly: AssemblyDescription("控制台程序")>]
 [<assembly: AssemblyConfiguration("")>]
 [<assembly: AssemblyCompany("")>]
-[<assembly: AssemblyProduct("SafetreeWorkerLibrary")>]
-[<assembly: AssemblyCopyright("Copyright ©  2015")>]
+[<assembly: AssemblyProduct("Runner")>]
+[<assembly: AssemblyCopyright("Copyright ©  2015 by peng1999")>]
 [<assembly: AssemblyTrademark("")>]
 [<assembly: AssemblyCulture("")>]
 
@@ -22,7 +22,7 @@ open System.Runtime.InteropServices
 [<assembly: ComVisible(false)>]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[<assembly: Guid("fd03c729-315c-4ca1-bcc1-dd2eece7a66d")>]
+[<assembly: Guid("c0492c3f-1c1e-4592-b863-f12b67a6122f")>]
 
 // Version information for an assembly consists of the following four values:
 // 
@@ -34,8 +34,8 @@ open System.Runtime.InteropServices
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [<assembly: AssemblyVersion("1.0.*")>]
-[<assembly: AssemblyVersion("0.5.0.0")>]
-[<assembly: AssemblyFileVersion("0.5.0.0")>]
+[<assembly: AssemblyVersion("0.0.1.0")>]
+[<assembly: AssemblyFileVersion("0.0.1.0")>]
 
 do
     ()

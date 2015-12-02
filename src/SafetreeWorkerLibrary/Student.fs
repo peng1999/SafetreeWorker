@@ -3,8 +3,8 @@ module SafetreeWorkerLibrary.Student
 
 let getUnfinishedWorks user = 
     printfn "done getUnfinishedWorks"
-    [Work(), Work()]
+    [Work(); Work()]
     //raise 
 
 let doWork work = 
-    printfn "done doWOrk"
+    printfn "done doWork"
