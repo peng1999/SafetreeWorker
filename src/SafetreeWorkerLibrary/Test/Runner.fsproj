@@ -8,11 +8,11 @@
     <ProjectGuid>c0492c3f-1c1e-4592-b863-f12b67a6122f</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Test</RootNamespace>
-    <AssemblyName>Test</AssemblyName>
+    <AssemblyName>Runner</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
-    <Name>Test</Name>
+    <Name>Runner</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -97,5 +97,8 @@ let httpHtmlDocument requestMethod uri cookies =
 let login ((User(name, password)) as user) =
     let uri = "http://chengdu.safetree.com.cn/"
     let loginStr = "/LoginHandler.ashx?userName=" + name + "&password=" + password + "&type=login&loginType=1"
-    let html = httpHtmlDocument HttpGet uri user.Cookie
+    //let html = httpHtmlDocument HttpGet uri user.Cookie
+    use responseStream =
+        webRequest uri HttpGet user.Cookie
+        |> responseStream
     ()
