@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SafetreeWorkerLibrary", "SafetreeWorkerLibrary\SafetreeWorkerLibrary.fsproj", "{FD03C729-315C-4CA1-BCC1-DD2EECE7A66D}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test", "Test\Test.fsproj", "{C0492C3F-1C1E-4592-B863-F12B67A6122F}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Runner", "Test\Runner.fsproj", "{C0492C3F-1C1E-4592-B863-F12B67A6122F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
