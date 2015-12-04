@@ -43,49 +43,6 @@ let responseStream (request : HttpWebRequest) =
     request.CookieContainer.Add(response.Cookies)
     ret
 
-//
-//let httpGetResponseStream uri cookies =
-//    let request = webRequest uri "GET" cookies
-//    use response = request.GetResponse () :?> HttpWebResponse
-//    response.GetResponseStream ()
-//
-//
-//let httpPostResponseStream uri parameters cookies =
-//    let request = webRequest uri "POST" cookies
-//    request.ServicePoint.Expect100Continue <- false
-//
-//    let postBytes =
-//        parameters
-//        |> Seq.map (fun (a, b : string) -> a + "=" + System.Web.HttpUtility.UrlEncode b)
-//        |> String.concat "&"
-//        |> System.Text.Encoding.UTF8.GetBytes
-//
-//    request.ContentLength <- int64 postBytes.Length
-//
-//    use postStream = request.GetRequestStream ()
-//    postStream.Write (postBytes, 0, postBytes.Length)
-//
-//    use response = request.GetResponse () :?> HttpWebResponse
-//    cookies.Add response.Cookies
-//    response.GetResponseStream ()
-//
-//
-//let httpGetHtmlDocument uri cookies = 
-//    use responseStream = httpGetResponseStream uri cookies
-//    
-//    let doc = HtmlDocument()
-//    doc.Load(responseStream)
-//    doc
-//
-//
-//let httpPostHtmlDocument uri parameters cookies =
-//    use responseStream = httpPostResponseStream uri parameters cookies
-//
-//    let doc = HtmlDocument()
-//    doc.Load(responseStream)
-//    doc
-//
-
 let httpHtmlDocument requestMethod uri cookies =
     use responseStream =
         webRequest uri requestMethod cookies
@@ -99,7 +56,6 @@ let httpHtmlDocument requestMethod uri cookies =
 let login ((User(name, password)) as user) =
     let loginStr = "/LoginHandler.ashx?userName=" + name + "&password=" + password + "&type=login&loginType=1"
     let loginUri = siteUri + loginStr
-    //let html = httpHtmlDocument HttpGet uri user.Cookie
     use responseStream =
         webRequest loginUri HttpGet user.Cookie
         |> responseStream
