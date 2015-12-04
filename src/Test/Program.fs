@@ -15,12 +15,13 @@ let main argv =
     //开始工作
 
     let user = User(name, password)
-    login user
+    //login user
+    let doc = downloadIndexPage user
     //let works = getUnfinishedWorks user
     //printfn "%A" works
     //works |> List.iter doWork
 
     //停止工作
 
-    System.Console.ReadLine ()
+    System.Console.ReadLine () |> ignore
     0 // return an integer exit code
