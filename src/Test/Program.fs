@@ -1,8 +1,8 @@
 ﻿// Learn more about F# at http://fsharp.org
 // See the 'F# Tutorial' project for more help.
-open SafetreeWorkerLibrary
-open SafetreeWorkerLibrary.Student
-open SafetreeWorkerLibrary.Web
+//open SafetreeWorkerLibrary
+//open SafetreeWorkerLibrary.Student
+//open SafetreeWorkerLibrary.Web
 
 [<EntryPoint>]
 let main argv = 
@@ -14,12 +14,7 @@ let main argv =
 
     //开始工作
 
-    let user = User(name, password)
-    //login user
-    let doc = downloadIndexPage user
-    //let works = getUnfinishedWorks user
-    //printfn "%A" works
-    //works |> List.iter doWork
+    
 
     //停止工作
 
