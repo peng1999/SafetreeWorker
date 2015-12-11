@@ -8,7 +8,7 @@ open FSharp.Text.RegexProvider
 open System.Net
 
 //type IndexPage = HtmlProvider<"..\..\data\CourseList.htm">
-type UriRegex = Regex< @".+TestIndex.aspx?li=(?<Li>\d+)&gid=(?<Gid>\d+)">
+type UriRegex = Regex< @"/TestCenter/TestIndex\.aspx\?li=(?<Li>.+)&gid=(?<Gid>.+)">
 
 let siteUri s = "http://chengdu.safetree.com.cn/" + s
 
@@ -54,6 +54,8 @@ let main argv =
             | _ -> None
 
         )
+    let linkstr = 
+        links
         |> Seq.map makeUri
 
     // 停止工作
